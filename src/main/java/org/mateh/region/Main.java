@@ -11,7 +11,7 @@ import org.mateh.region.listeners.player.RegionMenuChatListener;
 import org.mateh.region.listeners.player.RegionSelectionListener;
 import org.mateh.region.managers.RegionManager;
 import org.mateh.region.models.Region;
-import org.mateh.region.utils.RegionUtils;
+import org.mateh.region.threads.ParticleThread;
 
 public final class Main extends JavaPlugin {
     private static Main instance;
@@ -46,7 +46,7 @@ public final class Main extends JavaPlugin {
         getServer().getScheduler().runTaskTimer(this, () -> {
             for (Region region : regionManager.getRegions().values()) {
                 if (region.isShowingParticles()) {
-                    RegionUtils.displayFullRegionParticles(region);
+                    ParticleThread.drawRegionParticles(region);
                 }
             }
         }, 0L, 10L);

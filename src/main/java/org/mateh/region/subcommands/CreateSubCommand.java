@@ -7,7 +7,7 @@ import org.mateh.region.models.Region;
 import org.mateh.region.models.RegionSelection;
 import org.mateh.region.interfaces.SubCommand;
 import org.mateh.region.managers.RegionSelectionManager;
-import org.mateh.region.utils.RegionUtils;
+import org.mateh.region.threads.ParticleThread;
 
 public class CreateSubCommand implements SubCommand {
 
@@ -26,7 +26,7 @@ public class CreateSubCommand implements SubCommand {
         Region region = new Region(regionName, selection.getPoint1(), selection.getPoint2());
         Main.getInstance().getRegionManager().addRegion(region);
         player.sendMessage(ChatColor.GREEN + "Region " + regionName + " created.");
-        RegionUtils.displayFullRegionParticles(region);
+        ParticleThread.drawRegionParticles(region);
         RegionSelectionManager.clearSelection(player.getUniqueId());
         return true;
     }
