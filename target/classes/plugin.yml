@@ -1,0 +1,6 @@
+name: Region
+version: '1.0-SNAPSHOT'
+main: org.mateh.region.Main
+api-version: '1.21'
+commands:
+  region:
