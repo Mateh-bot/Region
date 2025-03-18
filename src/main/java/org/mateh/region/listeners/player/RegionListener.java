@@ -25,7 +25,7 @@ public class RegionListener implements Listener {
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.RED + "You cannot break blocks in this region.");
             } else if (state == FlagState.WHITELIST &&
-                    !region.getWhitelist().contains(player.getName().toLowerCase()) &&
+                    !region.getWhitelistMap().containsKey(player.getUniqueId().toString()) &&
                     !player.hasPermission("region.bypass")) {
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.RED + "You do not have permission to break blocks in this region.");
@@ -43,7 +43,7 @@ public class RegionListener implements Listener {
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.RED + "You cannot place blocks in this region.");
             } else if (state == FlagState.WHITELIST &&
-                    !region.getWhitelist().contains(player.getName().toLowerCase()) &&
+                    !region.getWhitelistMap().containsKey(player.getUniqueId().toString()) &&
                     !player.hasPermission("region.bypass")) {
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.RED + "You do not have permission to place blocks in this region.");
@@ -63,7 +63,7 @@ public class RegionListener implements Listener {
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.RED + "You cannot interact in this region.");
             } else if (state == FlagState.WHITELIST &&
-                    !region.getWhitelist().contains(player.getName().toLowerCase()) &&
+                    !region.getWhitelistMap().containsKey(player.getUniqueId().toString()) &&
                     !player.hasPermission("region.bypass")) {
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.RED + "You do not have permission to interact in this region.");
@@ -73,8 +73,7 @@ public class RegionListener implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player player = (Player) event.getDamager();
+        if (event.getDamager() instanceof Player player) {
             Region region = RegionUtils.getRegionAtLocation(player.getLocation());
             if (region != null) {
                 FlagState state = region.getFlagState(RegionFlag.ENTITY_DAMAGE);
@@ -82,7 +81,7 @@ public class RegionListener implements Listener {
                     event.setCancelled(true);
                     player.sendMessage(ChatColor.RED + "You cannot damage entities in this region.");
                 } else if (state == FlagState.WHITELIST &&
-                        !region.getWhitelist().contains(player.getName().toLowerCase()) &&
+                        !region.getWhitelistMap().containsKey(player.getUniqueId().toString()) &&
                         !player.hasPermission("region.bypass")) {
                     event.setCancelled(true);
                     player.sendMessage(ChatColor.RED + "You do not have permission to damage entities in this region.");

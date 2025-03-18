@@ -43,9 +43,25 @@ public class RegionCommand implements CommandExecutor {
         if (subCommands.containsKey(sub)) {
             return subCommands.get(sub).execute(player, args);
         } else {
-            Region region = Main.getInstance().getRegionManager().getRegion(args[0]);
+            String input = args[0];
+            Region region = Main.getInstance().getRegionManager().getRegion(input);
+            if (region == null) {
+                for (Region r : Main.getInstance().getRegionManager().getRegions().values()) {
+                    if (r.getName().equalsIgnoreCase(input)) {
+                        region = r;
+                        break;
+                    }
+                }
+            }
             if (region == null) {
                 player.sendMessage(ChatColor.RED + "Region does not exist.");
+                return true;
+            }
+            String playerUUID = player.getUniqueId().toString().toLowerCase();
+            if (!player.hasPermission("region.bypass") &&
+                    !region.getOwner().equals(playerUUID) &&
+                    !region.getWhitelistMap().containsKey(playerUUID)) {
+                player.sendMessage(ChatColor.RED + "You do not have permission to access this region.");
                 return true;
             }
             GUIManager.openRegionMenu(player, region);

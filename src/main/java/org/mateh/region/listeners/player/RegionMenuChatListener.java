@@ -1,5 +1,6 @@
 package org.mateh.region.listeners.player;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,26 +32,62 @@ public class RegionMenuChatListener implements Listener {
         }
 
         String message = event.getMessage();
+        String playerUUID = player.getUniqueId().toString().toLowerCase();
+
         switch (action.getActionType()) {
             case RENAME -> {
-                String oldName = region.getName();
-
-                Region newRegion = new Region(message, region.getLoc1(), region.getLoc2());
-                newRegion.getWhitelist().addAll(region.getWhitelist());
+                if (!region.getOwner().equals(playerUUID) && !player.hasPermission("region.bypass")) {
+                    player.sendMessage(ChatColor.RED + "You do not have permission to rename this region.");
+                    break;
+                }
+                Region newRegion = new Region(region.getId(), message, region.getOwner(), region.getLoc1(), region.getLoc2());
+                newRegion.getWhitelistMap().putAll(region.getWhitelistMap());
                 newRegion.getFlags().putAll(region.getFlags());
-                Main.getInstance().getRegionManager().removeRegion(oldName);
+                Main.getInstance().getRegionManager().removeRegion(region.getId());
                 Main.getInstance().getRegionManager().addRegion(newRegion);
                 player.sendMessage(ChatColor.GREEN + "Region renamed to " + message);
             }
             case ADD_WHITELIST -> {
-                region.addWhitelist(message);
-                player.sendMessage(ChatColor.GREEN + message + " added to the whitelist.");
+                Player target = Bukkit.getPlayerExact(message);
+                if (target == null) {
+                    player.sendMessage(ChatColor.RED + "Player " + message + " is not online.");
+                    break;
+                }
+                String targetUUID = target.getUniqueId().toString().toLowerCase();
+                if (region.getOwner().equals(targetUUID)) {
+                    player.sendMessage(ChatColor.RED + "The region owner cannot be added to the whitelist.");
+                } else {
+                    if (region.getWhitelistMap().containsKey(targetUUID)) {
+                        player.sendMessage(ChatColor.RED + target.getName() + " is already in the whitelist.");
+                    } else {
+                        region.addWhitelist(targetUUID, target.getName());
+                        player.sendMessage(ChatColor.GREEN + target.getName() + " added to the whitelist.");
+                    }
+                }
             }
             case REMOVE_WHITELIST -> {
-                region.removeWhitelist(message);
-                player.sendMessage(ChatColor.GREEN + message + " removed from the whitelist.");
+                Player target = Bukkit.getPlayerExact(message);
+                if (target == null) {
+                    player.sendMessage(ChatColor.RED + "Player " + message + " is not online.");
+                    break;
+                }
+                String targetUUID = target.getUniqueId().toString().toLowerCase();
+                if (region.getOwner().equals(targetUUID)) {
+                    player.sendMessage(ChatColor.RED + "The region owner cannot be removed from the whitelist.");
+                } else {
+                    if (!region.getWhitelistMap().containsKey(targetUUID)) {
+                        player.sendMessage(ChatColor.RED + target.getName() + " is not in the whitelist.");
+                    } else {
+                        region.removeWhitelist(targetUUID);
+                        player.sendMessage(ChatColor.GREEN + target.getName() + " removed from the whitelist.");
+                    }
+                }
             }
             case REDEFINE_LOCATION -> {
+                if (!region.getOwner().equals(playerUUID) && !player.hasPermission("region.bypass")) {
+                    player.sendMessage(ChatColor.RED + "You do not have permission to redefine the location of this region.");
+                    break;
+                }
                 if (!message.equalsIgnoreCase("confirm")) {
                     player.sendMessage(ChatColor.RED + "Type 'confirm' after selecting new region corners with the region wand.");
                     return;

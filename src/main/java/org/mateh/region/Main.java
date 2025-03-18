@@ -37,8 +37,8 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GUIListener(), this);
         getServer().getPluginManager().registerEvents(new RegionMenuChatListener(), this);
 
-        getServer().getScheduler().runTaskTimerAsynchronously(this, () ->{
-            for (Region region : regionManager.getRegions().values()){
+        getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
+            for (Region region : regionManager.getRegions().values()) {
                 regionSQL.saveRegion(region);
             }
         }, 0L, 1200L);
@@ -59,7 +59,7 @@ public final class Main extends JavaPlugin {
         }
         try {
             sqliteManager.close();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

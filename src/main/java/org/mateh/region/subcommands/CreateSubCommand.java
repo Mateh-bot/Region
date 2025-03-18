@@ -9,10 +9,17 @@ import org.mateh.region.interfaces.SubCommand;
 import org.mateh.region.managers.RegionSelectionManager;
 import org.mateh.region.threads.ParticleThread;
 
+import java.util.UUID;
+
 public class CreateSubCommand implements SubCommand {
 
     @Override
     public boolean execute(Player player, String[] args) {
+        if (!player.hasPermission("region.create")) {
+            player.sendMessage(ChatColor.RED + "You do not have permission to create regions.");
+            return true;
+        }
+
         if (args.length < 2) {
             player.sendMessage(ChatColor.RED + "Usage: /region create <name>");
             return true;
@@ -23,7 +30,9 @@ public class CreateSubCommand implements SubCommand {
             player.sendMessage(ChatColor.RED + "You must select both corners using the region wand (right-click on blocks).");
             return true;
         }
-        Region region = new Region(regionName, selection.getPoint1(), selection.getPoint2());
+        String id = UUID.randomUUID().toString();
+        String owner = player.getUniqueId().toString();
+        Region region = new Region(id, regionName, owner, selection.getPoint1(), selection.getPoint2());
         Main.getInstance().getRegionManager().addRegion(region);
         player.sendMessage(ChatColor.GREEN + "Region " + regionName + " created.");
         ParticleThread.drawRegionParticles(region);

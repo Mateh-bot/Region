@@ -7,10 +7,8 @@ import java.sql.PreparedStatement;
 
 public class SQLiteManager {
     private Connection connection;
-    private String dbPath;
 
     public SQLiteManager(String dbPath) {
-        this.dbPath = dbPath;
         try {
             File dbFile = new File(dbPath);
             File parent = dbFile.getParentFile();
@@ -26,7 +24,9 @@ public class SQLiteManager {
 
     private void createTables() throws Exception {
         String sql = "CREATE TABLE IF NOT EXISTS regions (" +
-                "name TEXT PRIMARY KEY," +
+                "id TEXT PRIMARY KEY," +
+                "name TEXT NOT NULL," +
+                "owner TEXT NOT NULL," +
                 "world TEXT NOT NULL," +
                 "x1 REAL NOT NULL, y1 REAL NOT NULL, z1 REAL NOT NULL," +
                 "x2 REAL NOT NULL, y2 REAL NOT NULL, z2 REAL NOT NULL," +
