@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mateh.region.Main;
-import org.mateh.region.models.Region;
 import org.mateh.region.interfaces.SubCommand;
+import org.mateh.region.models.Region;
 
 public class AddSubCommand implements SubCommand {
 

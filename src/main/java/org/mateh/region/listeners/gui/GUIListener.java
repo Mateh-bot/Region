@@ -12,14 +12,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.mateh.region.Main;
-import org.mateh.region.models.Region;
-import org.mateh.region.models.RegionMenuAction;
 import org.mateh.region.enums.FlagState;
 import org.mateh.region.enums.GUIType;
 import org.mateh.region.enums.RegionFlag;
 import org.mateh.region.guis.PlayerGUI;
 import org.mateh.region.managers.GUIManager;
 import org.mateh.region.managers.RegionMenuActionManager;
+import org.mateh.region.models.Region;
+import org.mateh.region.models.RegionMenuAction;
 
 public class GUIListener implements Listener {
 

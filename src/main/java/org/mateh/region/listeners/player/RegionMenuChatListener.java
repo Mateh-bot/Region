@@ -7,11 +7,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.mateh.region.Main;
+import org.mateh.region.managers.RegionMenuActionManager;
+import org.mateh.region.managers.RegionSelectionManager;
 import org.mateh.region.models.Region;
 import org.mateh.region.models.RegionMenuAction;
 import org.mateh.region.models.RegionSelection;
-import org.mateh.region.managers.RegionMenuActionManager;
-import org.mateh.region.managers.RegionSelectionManager;
 
 public class RegionMenuChatListener implements Listener {
 

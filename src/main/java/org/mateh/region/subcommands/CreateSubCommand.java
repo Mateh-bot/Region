@@ -3,10 +3,10 @@ package org.mateh.region.subcommands;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mateh.region.Main;
-import org.mateh.region.models.Region;
-import org.mateh.region.models.RegionSelection;
 import org.mateh.region.interfaces.SubCommand;
 import org.mateh.region.managers.RegionSelectionManager;
+import org.mateh.region.models.Region;
+import org.mateh.region.models.RegionSelection;
 import org.mateh.region.threads.ParticleThread;
 
 import java.util.UUID;

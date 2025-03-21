@@ -3,10 +3,10 @@ package org.mateh.region.subcommands;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mateh.region.Main;
-import org.mateh.region.models.Region;
 import org.mateh.region.enums.FlagState;
 import org.mateh.region.enums.RegionFlag;
 import org.mateh.region.interfaces.SubCommand;
+import org.mateh.region.models.Region;
 
 public class FlagSubCommand implements SubCommand {
 

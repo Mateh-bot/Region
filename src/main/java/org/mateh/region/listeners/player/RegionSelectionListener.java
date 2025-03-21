@@ -13,8 +13,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.mateh.region.Main;
-import org.mateh.region.models.RegionSelection;
 import org.mateh.region.managers.RegionSelectionManager;
+import org.mateh.region.models.RegionSelection;
 
 public class RegionSelectionListener implements Listener {
 

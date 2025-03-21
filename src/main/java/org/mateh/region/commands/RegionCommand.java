@@ -6,9 +6,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.mateh.region.Main;
-import org.mateh.region.models.Region;
 import org.mateh.region.interfaces.SubCommand;
 import org.mateh.region.managers.GUIManager;
+import org.mateh.region.models.Region;
 import org.mateh.region.subcommands.*;
 
 import java.util.HashMap;

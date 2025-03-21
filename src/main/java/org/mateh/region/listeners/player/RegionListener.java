@@ -8,9 +8,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.mateh.region.models.Region;
 import org.mateh.region.enums.FlagState;
 import org.mateh.region.enums.RegionFlag;
+import org.mateh.region.models.Region;
 import org.mateh.region.utils.RegionUtils;
 
 public class RegionListener implements Listener {
