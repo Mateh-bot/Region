@@ -4,11 +4,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.mateh.region.commands.RegionCommand;
 import org.mateh.region.completers.RegionTabCompleter;
 import org.mateh.region.data.RegionSQL;
-import org.mateh.region.data.SQLiteManager;
 import org.mateh.region.listeners.gui.GUIListener;
 import org.mateh.region.listeners.player.RegionListener;
 import org.mateh.region.listeners.player.RegionMenuChatListener;
 import org.mateh.region.listeners.player.RegionSelectionListener;
+import org.mateh.region.managers.MySQLManager;
 import org.mateh.region.managers.RegionManager;
 import org.mateh.region.models.Region;
 import org.mateh.region.threads.ParticleThread;
@@ -16,16 +16,23 @@ import org.mateh.region.threads.ParticleThread;
 public final class Main extends JavaPlugin {
     private static Main instance;
     private RegionManager regionManager;
-    private SQLiteManager sqliteManager;
     private RegionSQL regionSQL;
+    MySQLManager mysqlManager;
 
     @Override
     public void onEnable() {
         instance = this;
         regionManager = new RegionManager();
 
-        sqliteManager = new SQLiteManager(getDataFolder().getAbsolutePath() + "/data.db");
-        regionSQL = new RegionSQL(sqliteManager);
+        saveDefaultConfig();
+        String host = getConfig().getString("mysql.host", "localhost");
+        int port = getConfig().getInt("mysql.port", 3306);
+        String database = getConfig().getString("mysql.database", "regions_db");
+        String user = getConfig().getString("mysql.user", "root");
+        String password = getConfig().getString("mysql.password", "123456");
+
+        mysqlManager = new MySQLManager(host, port, database, user, password);
+        regionSQL = new RegionSQL(mysqlManager);
 
         regionManager.setRegions(regionSQL.loadRegions());
 
@@ -58,7 +65,7 @@ public final class Main extends JavaPlugin {
             regionSQL.saveRegion(region);
         }
         try {
-            sqliteManager.close();
+            mysqlManager.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
