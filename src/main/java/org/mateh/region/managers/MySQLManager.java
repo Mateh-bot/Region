@@ -36,7 +36,6 @@ public class MySQLManager {
         String sql = "CREATE TABLE IF NOT EXISTS regions ("
                 + "id VARCHAR(36) PRIMARY KEY,"
                 + "name VARCHAR(255) NOT NULL,"
-                + "owner VARCHAR(36) NOT NULL,"
                 + "world VARCHAR(255) NOT NULL,"
                 + "x1 DOUBLE NOT NULL, y1 DOUBLE NOT NULL, z1 DOUBLE NOT NULL,"
                 + "x2 DOUBLE NOT NULL, y2 DOUBLE NOT NULL, z2 DOUBLE NOT NULL,"

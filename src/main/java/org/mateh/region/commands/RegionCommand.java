@@ -59,7 +59,6 @@ public class RegionCommand implements CommandExecutor {
             }
             String playerUUID = player.getUniqueId().toString().toLowerCase();
             if (!player.hasPermission("region.bypass") &&
-                    !region.getOwner().equals(playerUUID) &&
                     !region.getWhitelistMap().containsKey(playerUUID)) {
                 player.sendMessage(ChatColor.RED + "You do not have permission to access this region.");
                 return true;

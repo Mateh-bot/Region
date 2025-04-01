@@ -30,26 +30,25 @@ public class RegionSQL {
             try {
                 Connection conn = mysqlManager.getConnection();
                 PreparedStatement ps = conn.prepareStatement(
-                        "INSERT INTO regions (id, name, owner, world, x1, y1, z1, x2, y2, z2, whitelist, flags, particles) " +
+                        "INSERT INTO regions (id, name, world, x1, y1, z1, x2, y2, z2, whitelist, flags, particles) " +
                                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
                                 "ON DUPLICATE KEY UPDATE " +
-                                "name = VALUES(name), owner = VALUES(owner), world = VALUES(world), " +
+                                "name = VALUES(name), world = VALUES(world), " +
                                 "x1 = VALUES(x1), y1 = VALUES(y1), z1 = VALUES(z1), " +
                                 "x2 = VALUES(x2), y2 = VALUES(y2), z2 = VALUES(z2), " +
                                 "whitelist = VALUES(whitelist), flags = VALUES(flags), particles = VALUES(particles)"
                 );
                 ps.setString(1, region.getId());
                 ps.setString(2, region.getName());
-                ps.setString(3, region.getOwner());
-                ps.setString(4, region.getLoc1().getWorld().getName());
-                ps.setDouble(5, region.getLoc1().getX());
-                ps.setDouble(6, region.getLoc1().getY());
-                ps.setDouble(7, region.getLoc1().getZ());
-                ps.setDouble(8, region.getLoc2().getX());
-                ps.setDouble(9, region.getLoc2().getY());
-                ps.setDouble(10, region.getLoc2().getZ());
+                ps.setString(3, region.getLoc1().getWorld().getName());
+                ps.setDouble(4, region.getLoc1().getX());
+                ps.setDouble(5, region.getLoc1().getY());
+                ps.setDouble(6, region.getLoc1().getZ());
+                ps.setDouble(7, region.getLoc2().getX());
+                ps.setDouble(8, region.getLoc2().getY());
+                ps.setDouble(9, region.getLoc2().getZ());
                 String whitelist = String.join(",", region.getWhitelistMap().keySet());
-                ps.setString(11, whitelist);
+                ps.setString(10, whitelist);
                 StringBuilder flagsBuilder = new StringBuilder();
                 for (Map.Entry<RegionFlag, FlagState> entry : region.getFlags().entrySet()) {
                     flagsBuilder.append(entry.getKey().name())
@@ -57,8 +56,8 @@ public class RegionSQL {
                             .append(entry.getValue().name())
                             .append(";");
                 }
-                ps.setString(12, flagsBuilder.toString());
-                ps.setInt(13, region.isShowingParticles() ? 1 : 0);
+                ps.setString(11, flagsBuilder.toString());
+                ps.setInt(12, region.isShowingParticles() ? 1 : 0);
                 ps.executeUpdate();
                 ps.close();
             } catch (SQLException e) {
@@ -76,7 +75,6 @@ public class RegionSQL {
             while (rs.next()) {
                 String id = rs.getString("id");
                 String name = rs.getString("name");
-                String owner = rs.getString("owner");
                 String worldName = rs.getString("world");
                 double x1 = rs.getDouble("x1");
                 double y1 = rs.getDouble("y1");
@@ -88,7 +86,7 @@ public class RegionSQL {
                 if (world == null) continue;
                 Location loc1 = new Location(world, x1, y1, z1);
                 Location loc2 = new Location(world, x2, y2, z2);
-                Region region = new Region(id, name, owner, loc1, loc2);
+                Region region = new Region(id, name, loc1, loc2);
 
                 String whitelistStr = rs.getString("whitelist");
                 if (whitelistStr != null && !whitelistStr.isEmpty()) {

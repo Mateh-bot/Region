@@ -41,12 +41,6 @@ public class RegionManager {
         this.regions = regions;
     }
 
-    public Map<String, Region> getRegionsCreatedBy(String playerUUID) {
-        return regions.values().stream()
-                .filter(r -> r.getOwner().equals(playerUUID))
-                .collect(Collectors.toMap(Region::getId, r -> r));
-    }
-
     public Map<String, Region> getRegionsWhitelistedFor(String playerUUID) {
         return regions.values().stream()
                 .filter(r -> r.getWhitelistMap().containsKey(playerUUID))

@@ -10,16 +10,14 @@ import java.util.Map;
 public class Region {
     private final String id;
     private String name;
-    private final String owner;
     private Location loc1, loc2;
     private final Map<String, String> whitelist;
     private final Map<RegionFlag, FlagState> flags;
     private boolean showParticles = false;
 
-    public Region(String id, String name, String owner, Location loc1, Location loc2) {
+    public Region(String id, String name, Location loc1, Location loc2) {
         this.id = id;
         this.name = name;
-        this.owner = owner;
         this.loc1 = loc1;
         this.loc2 = loc2;
         this.whitelist = new HashMap<>();
@@ -35,10 +33,6 @@ public class Region {
 
     public String getName() {
         return name;
-    }
-
-    public String getOwner() {
-        return owner;
     }
 
     public Location getLoc1() {
@@ -75,17 +69,11 @@ public class Region {
 
     public void addWhitelist(String uuid, String playerName) {
         String normalizedUUID = uuid.toLowerCase();
-        if (owner.equals(normalizedUUID) || whitelist.containsKey(normalizedUUID)) {
-            return;
-        }
         whitelist.put(normalizedUUID, playerName);
     }
 
     public void removeWhitelist(String uuid) {
         String normalizedUUID = uuid.toLowerCase();
-        if (owner.equals(normalizedUUID)) {
-            return;
-        }
         whitelist.remove(normalizedUUID);
     }
 

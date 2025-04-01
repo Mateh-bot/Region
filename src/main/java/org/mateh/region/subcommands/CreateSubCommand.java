@@ -31,8 +31,7 @@ public class CreateSubCommand implements SubCommand {
             return true;
         }
         String id = UUID.randomUUID().toString();
-        String owner = player.getUniqueId().toString();
-        Region region = new Region(id, regionName, owner, selection.getPoint1(), selection.getPoint2());
+        Region region = new Region(id, regionName, selection.getPoint1(), selection.getPoint2());
         Main.getInstance().getRegionManager().addRegion(region);
         player.sendMessage(ChatColor.GREEN + "Region " + regionName + " created.");
         ParticleThread.drawRegionParticles(region);

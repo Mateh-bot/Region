@@ -31,14 +31,7 @@ public class RegionTabCompleter implements TabCompleter {
                     completions.add(sub);
                 }
             }
-            Map<String, Region> created = rm.getRegionsCreatedBy(playerUUID);
             Map<String, Region> whitelisted = rm.getRegionsWhitelistedFor(playerUUID);
-            created.forEach((id, region) -> {
-                String suggestion = region.getName();
-                if (suggestion.toLowerCase().startsWith(currentArg)) {
-                    completions.add(suggestion);
-                }
-            });
             whitelisted.forEach((id, region) -> {
                 String suggestion = region.getName();
                 if (suggestion.toLowerCase().startsWith(currentArg)) {
@@ -49,14 +42,7 @@ public class RegionTabCompleter implements TabCompleter {
             String sub = args[0].toLowerCase();
             if (sub.equals("add") || sub.equals("remove") || sub.equals("whitelist") || sub.equals("flag")) {
                 String currentArg = args[1].toLowerCase();
-                Map<String, Region> created = rm.getRegionsCreatedBy(playerUUID);
                 Map<String, Region> whitelisted = rm.getRegionsWhitelistedFor(playerUUID);
-                created.forEach((id, region) -> {
-                    String suggestion = region.getName();
-                    if (suggestion.toLowerCase().startsWith(currentArg)) {
-                        completions.add(suggestion);
-                    }
-                });
                 whitelisted.forEach((id, region) -> {
                     String suggestion = region.getName();
                     if (suggestion.toLowerCase().startsWith(currentArg)) {

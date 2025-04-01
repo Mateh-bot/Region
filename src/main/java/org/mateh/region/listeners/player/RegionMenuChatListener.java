@@ -36,11 +36,11 @@ public class RegionMenuChatListener implements Listener {
 
         switch (action.getActionType()) {
             case RENAME -> {
-                if (!region.getOwner().equals(playerUUID) && !player.hasPermission("region.bypass")) {
+                if (!player.hasPermission("region.bypass")) {
                     player.sendMessage(ChatColor.RED + "You do not have permission to rename this region.");
                     break;
                 }
-                Region newRegion = new Region(region.getId(), message, region.getOwner(), region.getLoc1(), region.getLoc2());
+                Region newRegion = new Region(region.getId(), message, region.getLoc1(), region.getLoc2());
                 newRegion.getWhitelistMap().putAll(region.getWhitelistMap());
                 newRegion.getFlags().putAll(region.getFlags());
                 Main.getInstance().getRegionManager().removeRegion(region.getId());
@@ -54,16 +54,12 @@ public class RegionMenuChatListener implements Listener {
                     break;
                 }
                 String targetUUID = target.getUniqueId().toString().toLowerCase();
-                if (region.getOwner().equals(targetUUID)) {
-                    player.sendMessage(ChatColor.RED + "The region owner cannot be added to the whitelist.");
-                } else {
                     if (region.getWhitelistMap().containsKey(targetUUID)) {
                         player.sendMessage(ChatColor.RED + target.getName() + " is already in the whitelist.");
                     } else {
                         region.addWhitelist(targetUUID, target.getName());
                         player.sendMessage(ChatColor.GREEN + target.getName() + " added to the whitelist.");
                     }
-                }
             }
             case REMOVE_WHITELIST -> {
                 Player target = Bukkit.getPlayerExact(message);
@@ -72,19 +68,15 @@ public class RegionMenuChatListener implements Listener {
                     break;
                 }
                 String targetUUID = target.getUniqueId().toString().toLowerCase();
-                if (region.getOwner().equals(targetUUID)) {
-                    player.sendMessage(ChatColor.RED + "The region owner cannot be removed from the whitelist.");
-                } else {
                     if (!region.getWhitelistMap().containsKey(targetUUID)) {
                         player.sendMessage(ChatColor.RED + target.getName() + " is not in the whitelist.");
                     } else {
                         region.removeWhitelist(targetUUID);
                         player.sendMessage(ChatColor.GREEN + target.getName() + " removed from the whitelist.");
                     }
-                }
             }
             case REDEFINE_LOCATION -> {
-                if (!region.getOwner().equals(playerUUID) && !player.hasPermission("region.bypass")) {
+                if (!player.hasPermission("region.bypass")) {
                     player.sendMessage(ChatColor.RED + "You do not have permission to redefine the location of this region.");
                     break;
                 }

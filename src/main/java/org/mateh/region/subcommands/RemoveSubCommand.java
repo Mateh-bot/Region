@@ -22,8 +22,7 @@ public class RemoveSubCommand implements SubCommand {
             player.sendMessage(ChatColor.RED + "Region does not exist.");
             return true;
         }
-        String playerUUID = player.getUniqueId().toString().toLowerCase();
-        if (!region.getOwner().equals(playerUUID) && !player.hasPermission("region.bypass")) {
+        if (!player.hasPermission("region.bypass")) {
             player.sendMessage(ChatColor.RED + "You do not have permission to remove players from this region.");
             return true;
         }

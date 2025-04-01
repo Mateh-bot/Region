@@ -28,11 +28,7 @@ public class FlagSubCommand implements SubCommand {
             player.sendMessage(ChatColor.RED + "Region does not exist.");
             return true;
         }
-        String senderUUID = player.getUniqueId().toString();
-        if (!region.getOwner().equals(senderUUID) && !player.hasPermission("region.bypass")) {
-            player.sendMessage(ChatColor.RED + "You are not the owner of this region.");
-            return true;
-        }
+
         try {
             RegionFlag flag = RegionFlag.valueOf(flagName.toUpperCase());
             FlagState state = FlagState.valueOf(stateStr.toUpperCase());

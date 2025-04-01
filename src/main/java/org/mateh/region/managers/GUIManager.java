@@ -27,7 +27,7 @@ public class GUIManager {
         String playerUUID = player.getUniqueId().toString().toLowerCase();
         int slot = 0;
         for (Region region : Main.getInstance().getRegionManager().getRegions().values()) {
-            if (region.getOwner().equals(playerUUID) || region.getWhitelistMap().containsKey(playerUUID)) {
+            if (region.getWhitelistMap().containsKey(playerUUID)) {
                 ItemStack item = ItemUtils.createItem(Material.PAPER, ChatColor.AQUA + region.getName());
                 ItemMeta meta = item.getItemMeta();
                 meta.getPersistentDataContainer().set(new NamespacedKey(Main.getInstance(), "region_id"), PersistentDataType.STRING, region.getId());
